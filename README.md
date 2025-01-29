@@ -22,3 +22,12 @@ Componentes e Injeção de Dependência
 
 > ds-desafio1-mod1
 
+### Capítulo 2
+
+Modelo de Domínio e ORM
+
+**Desafio 1:** Modelo de Domínio e ORM
+
+**Projetos do Capítulo 2**
+
+> ds-desafio1-mod2
