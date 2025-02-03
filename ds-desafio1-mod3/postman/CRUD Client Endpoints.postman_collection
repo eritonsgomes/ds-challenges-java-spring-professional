@@ -1,0 +1,135 @@
+{
+	"info": {
+		"_postman_id": "a7df18fe-8030-441b-a715-6930440f31a4",
+		"name": "CRUD Client",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41733303"
+	},
+	"item": [
+		{
+			"name": "Client",
+			"item": [
+				{
+					"name": "Find All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/clients?size=5&page=0&sort=income,asc",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clients"
+							],
+							"query": [
+								{
+									"key": "size",
+									"value": "5"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "sort",
+									"value": "income,asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/clients/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clients",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Evelyn Tatiane de Brito\",\r\n    \"cpf\": \"71814832424\",\r\n    \"income\": 2758.65,\r\n    \"birthDate\": \"02/02/1947\",\r\n    \"children\": 4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/clients",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Evelyn Tatiane Freitas\",\r\n    \"cpf\": \"71814832424\",\r\n    \"income\": 6758.65,\r\n    \"birthDate\": \"02/02/1947\",\r\n    \"children\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/clients/11",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clients",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete By ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/clients/11",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clients",
+								"11"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

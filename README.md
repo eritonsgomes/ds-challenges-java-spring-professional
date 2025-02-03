@@ -31,3 +31,13 @@ Modelo de Domínio e ORM
 **Projetos do Capítulo 2**
 
 > ds-desafio1-mod2
+
+### Capítulo 3
+
+API REST, Camadas, CRUD, Exceções, Validações
+
+**Desafio 1:** CRUD de Clientes
+
+**Projetos do Capítulo 3**
+
+> ds-desafio1-mod3
