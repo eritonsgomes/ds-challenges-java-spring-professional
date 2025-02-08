@@ -41,3 +41,13 @@ API REST, Camadas, CRUD, Exceções, Validações
 **Projetos do Capítulo 3**
 
 > ds-desafio1-mod3
+
+### Capítulo 4
+
+JPA, Consultas SQL e JPQL
+
+**Desafio 1:** Consulta vendas
+
+**Projetos do Capítulo 4**
+
+> ds-desafio1-mod4 ([desafio-consulta-vendas](https://github.com/eritonsgomes/ds-desafio1-mod4))
