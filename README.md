@@ -51,3 +51,17 @@ JPA, Consultas SQL e JPQL
 **Projetos do Capítulo 4**
 
 > ds-desafio1-mod4 ([desafio-consulta-vendas](https://github.com/eritonsgomes/ds-desafio1-mod4))
+
+### Capítulo 5
+
+Login e Controle de Acesso
+
+**Desafio 1:** Login e Controle de Acesso com OAuth2 e JWT
+
+**Projetos do Capítulo 5**
+
+API do Sistema de Vendas DSCommerce
+>dscommerce
+
+Servidor de Autenticação e Autorização que implementa o Protocolo OAuth2
+> auth-web-server
