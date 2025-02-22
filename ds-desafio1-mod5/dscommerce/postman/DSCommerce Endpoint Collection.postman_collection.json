@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "60b3f9f6-2adf-46f7-821d-7f1d4a6817c2",
-		"name": "Oauth2 JWT password",
+		"_postman_id": "7758d7e4-ec51-4873-acf8-e2e7a1cebacd",
+		"name": "DSCommerce Endpoint Collection",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "26174631"
+		"_exporter_id": "41733303"
 	},
 	"item": [
 		{
@@ -160,7 +160,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"Tablet\"\r\n}",
+									"raw": "{\r\n    \"name\": \"Meu produto\",\r\n    \"description\": \"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Qui ad, adipisci illum ipsam velit et odit eaque reprehenderit ex maxime delectus dolore labore, quisquam quae tempora natus esse aliquam veniam doloremque quam minima culpa alias maiores commodi. Perferendis enim\",\r\n    \"imgUrl\": \"https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/1-big.jpg\",\r\n    \"price\": 50\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -174,6 +174,71 @@
 									],
 									"path": [
 										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Product (admin only)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Produto atualizado\",\r\n    \"description\": \"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Qui ad, adipisci illum ipsam velit et odit eaque reprehenderit ex maxime delectus dolore labore, quisquam quae tempora natus esse aliquam veniam doloremque quam minima culpa alias maiores commodi. Perferendis enim\",\r\n    \"imgUrl\": \"https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/1-big.jpg\",\r\n    \"price\": 200.0\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{rshost}}/products/1",
+									"host": [
+										"{{rshost}}"
+									],
+									"path": [
+										"products",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Product by id (admin only)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{rshost}}/products/1",
+									"host": [
+										"{{rshost}}"
+									],
+									"path": [
+										"products",
+										"1"
 									]
 								}
 							},
