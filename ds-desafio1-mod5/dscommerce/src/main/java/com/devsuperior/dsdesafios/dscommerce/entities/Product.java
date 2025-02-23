@@ -25,12 +25,13 @@ public class Product {
     @JoinTable(name = "tb_product_category",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private final Set<Category> categories = new HashSet<>();
+    private Set<Category> categories = new HashSet<>();
 
     @OneToMany(mappedBy = "id.product")
-    private final Set<OrderItem> items = new HashSet<>();
+    private Set<OrderItem> items = new HashSet<>();
 
     public Product() {
+        super();
     }
 
     public Product(Long id, String name, String description, Double price, String imgUrl) {
@@ -81,16 +82,24 @@ public class Product {
         this.imgUrl = imgUrl;
     }
 
-    public Set<Category> getCategories() {
-        return categories;
-    }
-
     public Set<OrderItem> getItems() {
         return items;
     }
 
+    public void setItems(Set<OrderItem> items) {
+        this.items = items;
+    }
+
     public List<Order> getOrders() {
         return items.stream().map(OrderItem::getOrder).toList();
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 
     @Override

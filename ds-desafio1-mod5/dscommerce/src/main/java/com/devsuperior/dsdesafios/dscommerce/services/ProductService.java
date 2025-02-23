@@ -1,8 +1,12 @@
 package com.devsuperior.dsdesafios.dscommerce.services;
 
+import com.devsuperior.dsdesafios.dscommerce.dto.CategoryMinDTO;
 import com.devsuperior.dsdesafios.dscommerce.dto.ProductDTO;
 import com.devsuperior.dsdesafios.dscommerce.dto.ProductMinDTO;
+import com.devsuperior.dsdesafios.dscommerce.entities.Category;
 import com.devsuperior.dsdesafios.dscommerce.entities.Product;
+import com.devsuperior.dsdesafios.dscommerce.projections.CategoryMinProjection;
+import com.devsuperior.dsdesafios.dscommerce.repositories.CategoryRepository;
 import com.devsuperior.dsdesafios.dscommerce.repositories.ProductRepository;
 import com.devsuperior.dsdesafios.dscommerce.services.exceptions.DatabaseException;
 import com.devsuperior.dsdesafios.dscommerce.services.exceptions.ResourceNotFoundException;
@@ -15,39 +19,76 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
 @Service
 public class ProductService {
 
     @Autowired
-    private ProductRepository repository;
+    private ProductRepository productRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
     public ProductDTO findById(Long id) {
-        Product product = repository.findById(id).orElseThrow(
+        Product product = productRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Recurso não encontrado"));
         return new ProductDTO(product);
     }
 
     @Transactional(readOnly = true)
     public Page<ProductMinDTO> findAll(String name, Pageable pageable) {
-        Page<Product> result = repository.searchByName(name, pageable);
+        Page<Product> result = productRepository.searchByName(name, pageable);
         return result.map(ProductMinDTO::new);
     }
 
     @Transactional
     public ProductDTO insert(ProductDTO dto) {
+        List<CategoryMinDTO> categories = searchCategoryFrom(dto);
+
+        Product entity = saveProductFrom(dto);
+
+        dto = new ProductDTO(entity);
+        dto.setCategories(categories);
+
+        return dto;
+    }
+
+    private List<CategoryMinDTO> searchCategoryFrom(ProductDTO dto) {
+        List<CategoryMinDTO> categories = new ArrayList<>();
+
+        List<CategoryMinProjection> categoriesFound = categoryRepository.searchByIdIn(dto.getCategories().stream()
+                .map(CategoryMinDTO::getId).toList());
+
+        for (CategoryMinProjection projection: categoriesFound) {
+            categories.add(new CategoryMinDTO(projection.getId(), projection.getName()));
+        }
+
+        return categories;
+    }
+
+    private Product saveProductFrom(ProductDTO dto) {
         Product entity = new Product();
+
         copyDtoToEntity(dto, entity);
-        entity = repository.save(entity);
-        return new ProductDTO(entity);
+
+        entity = productRepository.save(entity);
+
+        return entity;
     }
 
     @Transactional
     public ProductDTO update(Long id, ProductDTO dto) {
         try {
-            Product entity = repository.getReferenceById(id);
+            Product entity = productRepository.getReferenceById(id);
+
             copyDtoToEntity(dto, entity);
-            entity = repository.save(entity);
+
+            entity = productRepository.save(entity);
+
             return new ProductDTO(entity);
         }
         catch (EntityNotFoundException e) {
@@ -57,11 +98,11 @@ public class ProductService {
 
     @Transactional(propagation = Propagation.SUPPORTS)
     public void delete(Long id) {
-    	if (!repository.existsById(id)) {
+    	if (!productRepository.existsById(id)) {
     		throw new ResourceNotFoundException("Recurso não encontrado");
     	}
     	try {
-            repository.deleteById(id);    		
+            productRepository.deleteById(id);
     	}
         catch (DataIntegrityViolationException e) {
             throw new DatabaseException("Falha de integridade referencial");
@@ -73,5 +114,13 @@ public class ProductService {
         entity.setDescription(dto.getDescription());
         entity.setPrice(dto.getPrice());
         entity.setImgUrl(dto.getImgUrl());
+
+        entity.setCategories(new HashSet<>());
+
+        dto.getCategories().forEach(cat -> {
+            Category category = new Category();
+            category.setId(cat.getId());
+            entity.getCategories().add(category);
+        });
     }
 }
