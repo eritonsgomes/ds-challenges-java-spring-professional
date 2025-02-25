@@ -6,8 +6,11 @@ import java.time.Instant;
 
 public class PaymentDTO {
 
-    private final Long id;
-    private final Instant moment;
+    private Long id;
+    private Instant moment;
+
+    public PaymentDTO() {
+    }
 
     public PaymentDTO(Long id, Instant moment) {
         this.id = id;

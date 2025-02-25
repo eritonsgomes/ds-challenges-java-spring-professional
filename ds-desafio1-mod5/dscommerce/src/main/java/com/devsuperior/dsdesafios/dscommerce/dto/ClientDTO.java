@@ -4,8 +4,11 @@ import com.devsuperior.dsdesafios.dscommerce.entities.User;
 
 public class ClientDTO {
 
-    private final Long id;
-    private final String name;
+    private Long id;
+    private String name;
+
+    public ClientDTO() {
+    }
 
     public ClientDTO(Long id, String name) {
         this.id = id;
