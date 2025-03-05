@@ -39,4 +39,5 @@ public class CustomPasswordAuthenticationToken extends OAuth2AuthorizationGrantA
     public Set<String> getScopes() {
         return this.scopes;
     }
+
 }
