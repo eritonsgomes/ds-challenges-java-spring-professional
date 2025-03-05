@@ -1,6 +1,9 @@
 package com.devsuperior.dsdesafios.dscommerce.services;
 
-import com.devsuperior.dsdesafios.dscommerce.dto.*;
+import com.devsuperior.dsdesafios.dscommerce.dto.ClientDTO;
+import com.devsuperior.dsdesafios.dscommerce.dto.OrderDTO;
+import com.devsuperior.dsdesafios.dscommerce.dto.OrderItemDTO;
+import com.devsuperior.dsdesafios.dscommerce.dto.PaymentDTO;
 import com.devsuperior.dsdesafios.dscommerce.entities.*;
 import com.devsuperior.dsdesafios.dscommerce.projections.OrderProjection;
 import com.devsuperior.dsdesafios.dscommerce.repositories.OrderItemRepository;
@@ -17,6 +20,9 @@ import java.util.List;
 
 @Service
 public class OrderService {
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private OrderRepository orderRepository;
@@ -59,13 +65,9 @@ public class OrderService {
         return orderDTO;
     }
 
-    // TODO: Permitir apenas acesso aos Clientes
     @Transactional
     public OrderDTO insert(OrderDTO dto) {
-        // TODO: Incluir o Cliente Autenticado no Pedido
-        User user = new User();
-        user.setId(dto.getClient().getId());
-        user.setName(dto.getClient().getName());
+        User user = userService.getAuthenticatedUser();
 
         Order order = new Order();
         order.setClient(user);

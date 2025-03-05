@@ -43,6 +43,18 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional(readOnly = true)
+    public User getAuthenticatedUser() {
+        String userName = SecurityUtil.getUserName();
+        Optional<User> user = repository.findByEmail(userName);
+
+        if (user.isEmpty()) {
+            throw new UsernameNotFoundException("User not found");
+        }
+
+        return user.get();
+    }
+
+    @Transactional(readOnly = true)
     public UserDTO getLoggedUser() {
         String userName = SecurityUtil.getUserName();
         Optional<User> user = repository.findByEmail(userName);

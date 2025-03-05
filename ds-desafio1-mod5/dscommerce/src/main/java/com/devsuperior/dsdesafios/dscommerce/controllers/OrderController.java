@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface OrderController {
 
     @GetMapping(value = "/{id}")
+    @PreAuthorize("isAuthenticated()")
     ResponseEntity<OrderDTO> findById(@PathVariable Long id);
 
     @PostMapping
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyRole('ROLE_CLIENT')")
     ResponseEntity<OrderDTO> insert(@Valid @RequestBody OrderDTO dto);
 
 }

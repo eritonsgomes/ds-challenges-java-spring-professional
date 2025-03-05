@@ -17,11 +17,12 @@ public class SecurityUtil {
 
     public static String getUserName() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Jwt token= (Jwt) authentication.getPrincipal();
 
         if (Objects.equals("anonymousUser", authentication.getPrincipal())) {
             throw new JwtException("Token not found");
         }
+
+        Jwt token= (Jwt) authentication.getPrincipal();
 
         Optional<Object> user = Optional.ofNullable(token.getClaims().get("user"));
 
