@@ -8,6 +8,7 @@ import com.devsuperior.dsdesafios.dscommerce.services.exceptions.ResourceNotFoun
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -39,6 +40,13 @@ public class ControllerExceptionHandler {
         for (FieldError f : e.getBindingResult().getFieldErrors()) {
             err.addError(f.getField(), f.getDefaultMessage());
         }
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(JwtException.class)
+    public ResponseEntity<CustomErrorDTO> jwt(JwtException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.UNAUTHORIZED;
+        CustomErrorDTO err = new CustomErrorDTO(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
 
