@@ -21,7 +21,7 @@ Login e Controle de Acesso
 **Projetos do Capítulo 5**
 
 API do Sistema de Vendas DSCommerce
->dscommerce
+> dscommerce
 
 Servidor de Autenticação e Autorização que implementa o Protocolo OAuth2
-> auth-web-server
+> dscommerce
