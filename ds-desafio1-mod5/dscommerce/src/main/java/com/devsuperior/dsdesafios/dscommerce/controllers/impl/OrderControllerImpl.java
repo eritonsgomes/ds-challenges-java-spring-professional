@@ -23,7 +23,7 @@ public class OrderControllerImpl implements OrderController {
 
     @Override
     public ResponseEntity<OrderDTO> findById(@PathVariable Long id) {
-        OrderDTO dto = orderService.findById(id);
+        OrderDTO dto = orderService.searchById(id);
         return ResponseEntity.ok(dto);
     }
 

@@ -4,6 +4,7 @@ package com.devsuperior.dsdesafios.dscommerce.controllers.handlers;
 import com.devsuperior.dsdesafios.dscommerce.dto.CustomErrorDTO;
 import com.devsuperior.dsdesafios.dscommerce.dto.ValidationErrorDTO;
 import com.devsuperior.dsdesafios.dscommerce.services.exceptions.DatabaseException;
+import com.devsuperior.dsdesafios.dscommerce.services.exceptions.ForbiddenException;
 import com.devsuperior.dsdesafios.dscommerce.services.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -46,6 +47,13 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(JwtException.class)
     public ResponseEntity<CustomErrorDTO> jwt(JwtException e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.UNAUTHORIZED;
+        CustomErrorDTO err = new CustomErrorDTO(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<CustomErrorDTO> forbidden(ForbiddenException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.FORBIDDEN;
         CustomErrorDTO err = new CustomErrorDTO(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
