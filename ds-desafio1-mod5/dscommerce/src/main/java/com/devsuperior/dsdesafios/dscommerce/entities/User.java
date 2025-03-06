@@ -23,13 +23,13 @@ public class User implements UserDetails {
     private String password;
 
     @OneToMany(mappedBy = "client")
-    private final List<Order> orders = new ArrayList<>();
+    private List<Order> orders = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "tb_user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private final Set<Role> roles = new HashSet<>();
+    private Set<Role> roles = new HashSet<>();
 
     public User() {
     }
@@ -83,6 +83,10 @@ public class User implements UserDetails {
         this.birthDate = birthDate;
     }
 
+    public boolean hasHole(String roleName) {
+        return roles.stream().anyMatch(role -> Objects.equals(roleName, role.getAuthority()));
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
@@ -125,8 +129,16 @@ public class User implements UserDetails {
         return orders;
     }
 
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
     public Set<Role> getRoles() {
         return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public void addRole(Role role) {

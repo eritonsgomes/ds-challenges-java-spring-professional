@@ -1,5 +1,6 @@
 package com.devsuperior.dsdesafios.dscommerce.dto;
 
+import com.devsuperior.dsdesafios.dscommerce.entities.Role;
 import com.devsuperior.dsdesafios.dscommerce.entities.User;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -29,12 +30,24 @@ public class UserDTO {
         }
     }
 
+    public void addRole(Role role) {
+        roles.add(role.getAuthority());
+    }
+
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Set<String> getRoles() {

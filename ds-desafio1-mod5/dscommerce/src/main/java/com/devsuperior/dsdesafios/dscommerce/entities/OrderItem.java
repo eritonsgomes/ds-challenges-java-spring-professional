@@ -1,5 +1,6 @@
 package com.devsuperior.dsdesafios.dscommerce.entities;
 
+import com.devsuperior.dsdesafios.dscommerce.dto.OrderItemDTO;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -24,6 +25,12 @@ public class OrderItem {
         id.setProduct(product);
         this.quantity = quantity;
         this.price = price;
+    }
+
+    public OrderItem(OrderItemDTO dto) {
+        id.setProduct(new Product(dto.getProductId(), dto.getName(), null, dto.getPrice(), dto.getImgUrl()));
+        this.quantity = dto.getQuantity();
+        this.price = dto.getPrice();
     }
 
     public Order getOrder() {
